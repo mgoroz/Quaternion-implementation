@@ -1,0 +1,4 @@
+Realiseerida abstraktne andmetüüp "Kvaternioon", millel oleksid tabelis https://enos.itcollege.ee/%7Ejapoia/algoritmid/quat/ loetletud operatsioonid.
+
+Implement an abstract data type "Quaternion" according to https://enos.itcollege.ee/%7Ejapoia/algoritmid/quat/ 
+
