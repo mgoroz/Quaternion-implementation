@@ -310,7 +310,7 @@ public class Quaternion {
       if (n == 0) {
          return new Quaternion(1, 0, 0, 0);
       } else if (n == 1) {
-         return this;
+         return new Quaternion(this.getRpart(), this.getIpart(), this.getJpart(), this.getKpart());
       } else if (n == -1) {
          return this.inverse();
       } else if  (n > 1){
@@ -374,7 +374,7 @@ public class Quaternion {
       System.out.println(q1.pow(0).toString()); // "1.0 + 0.0i + 0.0j + 0.0k"
       System.out.println(q1.pow(1).toString()); // "3.0 + 4.0i + 2.0j + 1.0k" (equal to q1)
       System.out.println(q1.pow(-1).toString()); // inverse of q1
-      System.out.println(q1.pow(2).toString()); // q1 * q1
+      System.out.println(q1.pow(5).toString()); // q1 * q1
       System.out.println(q1.pow(-2).toString()); // (q1 * q1).inverse()
 
 

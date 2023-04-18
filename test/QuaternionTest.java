@@ -623,6 +623,7 @@ public class QuaternionTest {
       Quaternion qTest = qWork.pow(1);
 
       assertEquals(qTest.toString(), qWork.toString());
+      assertNotSame(qTest, qWork);
    }
 
    @Test (timeout=1000)
