@@ -183,7 +183,7 @@ public class Quaternion {
          throw new ArithmeticException("Quaternion has zero norm and no inverse.");
       }
       double invNormSq = 1.0 / normSq;
-      return new Quaternion(a * invNormSq, -b * invNormSq, -c * invNormSq, -d * invNormSq);
+      return new Quaternion(round(a * invNormSq, 4), round(-b * invNormSq, 4), round(-c * invNormSq, 4), round(-d * invNormSq, 4));
    }
 
    /** Difference of quaternions. Expressed as addition to the opposite.
@@ -237,9 +237,18 @@ public class Quaternion {
    }
 
    private double roundToDecimalPlaces(double d, int decimalPlaces) {
-      double factor = Math.pow(10, decimalPlaces);
+      double factor = Math.pow(2, decimalPlaces);
       return Math.round(d * factor) / factor;
    }
+
+   private static double round(double value, int places) {
+      if (places < 0) {
+         throw new IllegalArgumentException("The number of decimal places must be non-negative.");
+      }
+      double scale = Math.pow(10, places);
+      return Math.round(value * scale) / scale;
+   }
+
 
 
    /** Equality test of quaternions. Difference of equal numbers
@@ -296,16 +305,32 @@ public class Quaternion {
       return Math.sqrt(a * a + b * b + c * c + d * d);
    }
 
+
+   public Quaternion pow (int n){
+      if (n == 0) {
+         return new Quaternion(1, 0, 0, 0);
+      } else if (n == 1) {
+         return this;
+      } else if (n == -1) {
+         return this.inverse();
+      } else if  (n > 1){
+         return this.times (this.pow(n - 1));
+      } else {
+         return this.pow(n * -1).inverse();
+      }
+   }
+
    /** Main method for testing purposes.
     * @param arg command line parameters
     */
    public static void main (String[] args) {
+
       // Creating some quaternions for testing
       Quaternion q1 = new Quaternion(3, 4, 2, 1);
       Quaternion q2 = new Quaternion(-2, 1, 5, -3);
       Quaternion q3 = new Quaternion(-3, -4, -2, -1);
       Quaternion q4 = new Quaternion(0, 0, 0, 0);
-
+/*
       // Testing equals method
       System.out.println(q1.equals(q1)); // true
       System.out.println(q1.equals(q2)); // false
@@ -345,6 +370,13 @@ public class Quaternion {
 
       Quaternion divLeft = q2.divideByLeft(q1);
       System.out.println(divLeft.toString());
+*/
+      System.out.println(q1.pow(0).toString()); // "1.0 + 0.0i + 0.0j + 0.0k"
+      System.out.println(q1.pow(1).toString()); // "3.0 + 4.0i + 2.0j + 1.0k" (equal to q1)
+      System.out.println(q1.pow(-1).toString()); // inverse of q1
+      System.out.println(q1.pow(2).toString()); // q1 * q1
+      System.out.println(q1.pow(-2).toString()); // (q1 * q1).inverse()
+
 
    }
 }

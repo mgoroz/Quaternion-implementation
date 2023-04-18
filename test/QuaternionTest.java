@@ -605,5 +605,57 @@ public class QuaternionTest {
          h1 == h2);
    }
 
+   @Test (timeout=1000)
+   public void testPowValueZero() {
+      Quaternion qTest = new Quaternion(1., 0., 0., 0.);
+
+      Quaternion qWork = new Quaternion(5., 3., 1., 8.);
+
+      qWork = qWork.pow(0);
+
+      assertEquals(qTest.toString(), qWork.toString());
+   }
+
+   @Test (timeout=1000)
+   public void testPowValueOne() {
+      Quaternion qWork = new Quaternion(1., 0., 0., 0.);
+
+      Quaternion qTest = qWork.pow(1);
+
+      assertEquals(qTest.toString(), qWork.toString());
+   }
+
+   @Test (timeout=1000)
+   public void testPowValueMinusOne() {
+      Quaternion qTest = new Quaternion (0.0032, -0.0048, -0.0096, -0.0384);
+
+      Quaternion qWork = qTest.pow(-1);
+
+      assertEquals(qTest.inverse().toString(), qWork.toString());
+   }
+
+   @Test(timeout = 1000)
+   public void testPowValueN() {
+      Quaternion qTest = new Quaternion (1., 2., 3., 4.);
+
+      Quaternion qWork = qTest.pow(2);
+
+      Quaternion qWork2 = qTest.times(qTest);
+
+      assertEquals("-28.0+4.0i+6.0j+8.0k", qWork.toString());
+      assertEquals(qWork.toString(), qWork2.toString());
+   }
+
+   @Test(timeout = 1000)
+   public void testPowValueMinusN() {
+      Quaternion qTest = new Quaternion (1., 2., 3., 4.);
+
+      Quaternion qWork = qTest.pow(-3);
+
+      Quaternion qWork2 = qTest.times(qTest).times(qTest).inverse();
+
+      assertEquals("-0.0032+0.0019i+0.0029j+0.0039k", qWork.toString());
+      assertEquals(qWork.toString(), qWork2.toString());
+   }
 }
 
